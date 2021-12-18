@@ -9,6 +9,7 @@ import pl.sda.christmasgifts.repository.WishRepository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class JpaChristmasGiftsService implements ChristmasGiftsService{
@@ -23,13 +24,14 @@ public class JpaChristmasGiftsService implements ChristmasGiftsService{
 
     @Override
     public Person addPerson(Person person) {
+        person.setId(UUID.randomUUID());
         return personRepository.save(person);
     }
 
     @Override
     @Transactional
     // dodajemy nowe zyczenie do istniejacej w bazie osoby
-    public Optional<Wish> addPersonWish(Wish wish, long personId) {
+    public Optional<Wish> addPersonWish(Wish wish, UUID personId) {
         final Optional<Person> optionalPerson = personRepository.findById(personId);
         if (optionalPerson.isEmpty()) {
             return Optional.empty();

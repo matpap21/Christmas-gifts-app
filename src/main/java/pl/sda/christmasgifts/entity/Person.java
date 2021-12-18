@@ -3,7 +3,9 @@ package pl.sda.christmasgifts.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Builder
@@ -13,17 +15,17 @@ import java.util.Set;
 @NoArgsConstructor
 public class Person {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(nullable = false)
-    private long id;
+   // @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@Column(nullable = false)
+    private UUID id; // dlugi ciag generowany losowo
     private String username;
     private String email;
 
     @OneToMany
-    private Set<Wish> wishes;
+    private Set<Wish> wishes = new HashSet<>();
 
     @OneToMany
-    private Set<Wish> gifts;
+    private Set<Wish> gifts = new HashSet<>();
 
 
 
