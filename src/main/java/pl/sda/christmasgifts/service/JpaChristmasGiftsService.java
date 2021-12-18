@@ -33,7 +33,7 @@ public class JpaChristmasGiftsService implements ChristmasGiftsService{
     // dodajemy nowe zyczenie do istniejacej w bazie osoby
     public Optional<Wish> addPersonWish(Wish wish, UUID personId) {
         final Optional<Person> optionalPerson = personRepository.findById(personId);
-        if (optionalPerson.isEmpty()) {
+        if (!optionalPerson.isPresent()) {
             return Optional.empty();
         } else {
             Person person = optionalPerson.get();
