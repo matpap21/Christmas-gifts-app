@@ -17,6 +17,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 // https://github.com/siwoncezary/xmas-gifts-app/blob/master/src/main/java/pl/sda/xmasgifts/service/JpaXmasGiftsService.java
+// https://dashboard.heroku.com/apps/christmas-gifter123/logs
 @Controller
 public class ChristmasGiftsController {
 
@@ -40,7 +41,7 @@ public class ChristmasGiftsController {
     @PostMapping("/user/add")
     public ModelAndView  addUser(@ModelAttribute Person person, HttpServletResponse response){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("add-user-confirm");
+        modelAndView.setViewName("add-user-confirmation");
         final Person user = christmasGiftsService.addPerson(person);
         modelAndView.getModelMap().addAttribute("person", user);
         Cookie cookie = new Cookie(XMAS_USER_ID, user.getId().toString());
@@ -67,7 +68,7 @@ public class ChristmasGiftsController {
                 uuidString = cookie.getValue();
                 final Optional<Wish> optionalWish = christmasGiftsService.addPersonWish(wish, UUID.fromString(uuidString));
                 if (optionalWish.isPresent()) {
-                    return "user/list";
+                    return "/user/list";
                 } else {
                     return "add-wish-error";
 
